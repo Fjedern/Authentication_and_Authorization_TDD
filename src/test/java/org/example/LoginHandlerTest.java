@@ -10,7 +10,7 @@ public class LoginHandlerTest {
     void create_new_login_success() {
         LoginHandler loginHandler = new LoginHandler();
 
-        Login login = loginHandler.startLogin();
+        Login login = loginHandler.startLogin("anna", "losen");
 
         assertNotNull(login);
     }
