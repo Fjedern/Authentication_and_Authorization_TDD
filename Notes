@@ -4,6 +4,11 @@
 
 IAuthenticate as interface
 
+funktion för att kryptera lösen
+
+createLogin -> kryptera
+Sign in -> check if password is correct
+
 
 Useful links
 https://stackoverflow.com/questions/560648/object-oriented-login-functionality

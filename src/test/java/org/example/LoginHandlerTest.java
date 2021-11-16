@@ -1,20 +1,24 @@
 package org.example;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginHandlerTest {
+    LoginHandler loginHandler;
+
+    @BeforeEach
+    void setUp() {
+        loginHandler = new LoginHandler();
+        loginHandler.addAllUsers();
+    }
 
     @Test
     void create_new_login_success() {
-        LoginHandler loginHandler = new LoginHandler();
 
-        Login login = loginHandler.startLogin("anna", "losen");
+        boolean isLoggedIn = LoginHandler.startLogin("anna", "losen");
 
-        assertNotNull(login);
-        assertEquals("anna", login.getUsername());
-        assertEquals("losen", login.getPassword());
+        assertTrue(isLoggedIn);
     }
 }
