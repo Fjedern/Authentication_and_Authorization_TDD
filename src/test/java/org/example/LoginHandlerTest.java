@@ -17,17 +17,25 @@ public class LoginHandlerTest {
     }
 
     @Test
-    void login_user_return_token_success() throws WrongLoginException {
+    void test_login_user_return_token_success() throws WrongLoginException {
         String isLoggedIn = loginHandler.startLogin("anna", "losen");
 
         assertEquals(loginHandler.userList.get("anna").getToken(), isLoggedIn);
     }
 
     @Test
-    void login_user_failed_because_wrong_password() {
+    void test_login_user_failed_because_wrong_password() {
         WrongLoginException wrongLoginException = assertThrows(WrongLoginException.class, () -> loginHandler.startLogin("anna", "apa"));
 
         assertEquals("Wrong login", wrongLoginException.getMessage());
+    }
+
+    @Test
+    void test_check_if_token_is_valid_success() throws WrongLoginException {
+        String token = loginHandler.startLogin("anna", "losen");
+        boolean isTokenValid = loginHandler.validateToken(token);
+
+        assertTrue(isTokenValid);
     }
 }
 
