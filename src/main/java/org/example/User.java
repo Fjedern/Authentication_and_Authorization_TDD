@@ -4,9 +4,9 @@ public class User {
     String username;
     String hashPassword;
     String salt;
-    int token;
+    String token;
 
-    public User(String username, String hashPassword, String salt, int token) {
+    public User(String username, String hashPassword, String salt, String token) {
         this.username = username;
         this.hashPassword = hashPassword;
         this.salt = salt;
@@ -21,11 +21,11 @@ public class User {
         return salt;
     }
 
-    public int getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
