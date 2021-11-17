@@ -37,5 +37,10 @@ public class LoginHandlerTest {
 
         assertTrue(isTokenValid);
     }
+
+    @Test
+    void test_check_user_permissions_success() {
+
+    }
 }
 
