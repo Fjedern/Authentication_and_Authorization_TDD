@@ -11,14 +11,16 @@ public class LoginHandlerTest {
     @BeforeEach
     void setUp() {
         loginHandler = new LoginHandler();
-        loginHandler.addAllUsers();
+        loginHandler.addUser("anna", "losen");
+        loginHandler.addUser("berit", "123456");
+        loginHandler.addUser("kalle", "password");
     }
 
     @Test
-    void create_new_login_success() {
+    void login_user_success() {
+        int isLoggedIn = LoginHandler.startLogin("anna", "losen");
 
-        boolean isLoggedIn = LoginHandler.startLogin("anna", "losen");
-
-        assertTrue(isLoggedIn);
+        assertEquals(LoginHandler.hashedUserList.get("anna").getToken(), isLoggedIn);
     }
 }
+

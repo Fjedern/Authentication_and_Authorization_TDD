@@ -2,29 +2,39 @@ package org.example;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import static org.example.HashHandler.*;
 
 public class LoginHandler {
 
-    static Map<String, Login> savedLogins = new HashMap<>();
+    static Map<String, User> hashedUserList = new HashMap<>();
 
-    public static Boolean startLogin(String username, String password){
-        Login login = savedLogins.get(username);
+    public static int startLogin(String username, String password){
+        User currentUser = hashedUserList.get(username);
         if(username == null){
             System.out.println("No username");  //Change for exception
-            return false;
+            return 0;
         }
-
-        if(password.equals(login.getPassword())){
-            return true;
+        boolean unhash = verifyPassword(password,
+                currentUser.getHashPassword(),
+                currentUser.getSalt());
+        if(unhash){
+            return currentUser.getToken();
         } else {
-            return false;
+            System.out.println("Wrong");
+            return 0;
         }
-
     }
 
-    public void addAllUsers() {
-        savedLogins.put("anna", new Login("anna", "losen"));
-        savedLogins.put("berit", new Login("berit", "123456"));
-        savedLogins.put("kalle", new Login("kalle", "password"));
+    public void addUser(String username, String password) {
+        String tmpSalt = generateSalt(5).get();
+        String tmpHash = hashPassword(password, tmpSalt).get();
+        Random rand = new Random();
+        int tokenGen = rand.nextInt(50 + hashedUserList.size());
+        hashedUserList.put(username, new User(username,
+                tmpHash,
+                tmpSalt,
+                tokenGen));
     }
 }
