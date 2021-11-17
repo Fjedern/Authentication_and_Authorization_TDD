@@ -29,11 +29,27 @@ public class LoginHandler {
     public void addUser(String username, String password) {
         String tmpSalt = generateSalt(5).get();
         String tmpHash = hashPassword(password, tmpSalt).get();
-        Random rand = new Random();
-        int tokenGen = rand.nextInt(50 + userList.size());
         userList.put(username, new User(username,
                 tmpHash,
                 tmpSalt,
-                Integer.toString(tokenGen)));
+                generateUniqueToken()));
+    }
+
+    private String generateUniqueToken(){
+        Random rand = new Random();
+        int token = rand.nextInt(50 + userList.size());
+
+        if(!validateToken(Integer.toString(token)))
+            token = rand.nextInt(50 + userList.size());
+
+        return Integer.toString(token);
+    }
+
+    public boolean validateToken(String token) {
+        for (User value : userList.values()) {
+            if(value.getToken().equals(token))
+                return true;
+        }
+        return false;
     }
 }
