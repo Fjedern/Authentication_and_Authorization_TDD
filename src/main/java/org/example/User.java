@@ -9,8 +9,6 @@ public class User {
     String salt;
     String token;
 
-
-
     public User(String username, String hashPassword, String salt, String token) {
         this.username = username;
         this.hashPassword = hashPassword;
@@ -29,14 +27,5 @@ public class User {
     public String getToken() {
         return token;
     }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
 
 }
