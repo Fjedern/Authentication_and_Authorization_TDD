@@ -1,10 +1,15 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     String username;
     String hashPassword;
     String salt;
     String token;
+
+
 
     public User(String username, String hashPassword, String salt, String token) {
         this.username = username;
@@ -32,4 +37,6 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+
 }

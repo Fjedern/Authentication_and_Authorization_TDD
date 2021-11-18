@@ -3,6 +3,8 @@ package org.example;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginHandlerTest {
@@ -14,6 +16,10 @@ public class LoginHandlerTest {
         loginHandler.addUser("anna", "losen");
         loginHandler.addUser("berit", "123456");
         loginHandler.addUser("kalle", "password");
+
+        loginHandler.addPermissionsToResourceForUser("anna", "ACCOUNT", List.of(Permissions.READ));
+        loginHandler.addPermissionsToResourceForUser("berit", "ACCOUNT", List.of(Permissions.READ, Permissions.WRITE));
+        loginHandler.addPermissionsToResourceForUser("anna", "PROVISION_CALC", List.of(Permissions.EXECUTE));
     }
 
     @Test
@@ -39,8 +45,11 @@ public class LoginHandlerTest {
     }
 
     @Test
-    void test_check_user_permissions_success() {
+    void test_check_user_permissions_success() throws WrongLoginException {
+        String token = loginHandler.startLogin("berit", "123456");
+        List<Permissions> testList = List.of(Permissions.READ, Permissions.WRITE);
 
+        assertEquals(testList , loginHandler.getPermission(token, "ACCOUNT"));
     }
 }
 

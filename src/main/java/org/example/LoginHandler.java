@@ -1,14 +1,13 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static org.example.HashHandler.*;
 
 public class LoginHandler {
 
     static Map<String, User> userList = new HashMap<>();
+    static Map <String, UserPermission> userPermissions = new HashMap<>();
 
     public String startLogin(String username, String password) throws WrongLoginException {
         User currentUser = userList.get(username);
@@ -51,5 +50,29 @@ public class LoginHandler {
                 return true;
         }
         return false;
+    }
+
+    public void addPermissionsToResourceForUser(String username, String resource, List<Permissions> permissions) {
+        User user = userList.get(username);
+        userPermissions.put(user.getToken(), new UserPermission(user.getToken(), resource, permissions));
+    }
+
+    public List<Permissions> getPermission(String token, String resource) {
+        UserPermission user = userPermissions.get(token);
+        return user.getPermissions(resource);
+    }
+
+    public class UserPermission {
+        String token;
+        Map<String, List<Permissions>> resourcesPermissions = new HashMap<>();
+
+        public UserPermission(String token, String resource, List<Permissions> permissions) {
+            this.token = token;
+            resourcesPermissions.put(resource, permissions);
+        }
+
+        public List<Permissions> getPermissions(String resource) {
+            return resourcesPermissions.get(resource);
+        }
     }
 }
