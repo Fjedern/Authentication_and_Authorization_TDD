@@ -2,6 +2,8 @@ package org.example;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -33,7 +35,15 @@ public class LoginHandlerTest {
     void test_login_user_failed_because_wrong_password() {
         WrongLoginException wrongLoginException = assertThrows(WrongLoginException.class, () -> loginHandler.startLogin("anna", "apa"));
 
-        assertEquals("Wrong login", wrongLoginException.getMessage());
+        assertThrows(WrongLoginException.class, () -> loginHandler.startLogin("anna", "apa"));
+        assertEquals("Wrong password", wrongLoginException.getMessage());
+    }
+
+    @Test
+    void test_login_user_failed_because_null_username() {
+        WrongLoginException wrongLoginException = assertThrows(WrongLoginException.class, () -> loginHandler.startLogin(null, "apa"));
+
+        assertEquals("Wrong username", wrongLoginException.getMessage());
     }
 
     @Test

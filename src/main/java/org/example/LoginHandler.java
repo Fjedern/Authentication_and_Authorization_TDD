@@ -6,14 +6,13 @@ import static org.example.HashHandler.*;
 
 public class LoginHandler {
 
-    static Map<String, User> userList = new HashMap<>();
-    static Map <String, UserPermission> userPermissions = new HashMap<>();
+    Map<String, User> userList = new HashMap<>();
+    Map <String, UserPermission> userPermissions = new HashMap<>();
 
     public String startLogin(String username, String password) throws WrongLoginException {
         User currentUser = userList.get(username);
         if(username == null){
-            System.out.println("No username");  //Change for exception
-            throw new WrongLoginException("Wrong login");
+            throw new WrongLoginException("Wrong username");
         }
         boolean validate = verifyPassword(password,
                 currentUser.getHashPassword(),
@@ -21,7 +20,7 @@ public class LoginHandler {
         if(validate){
             return currentUser.getToken();
         } else {
-            throw new WrongLoginException("Wrong login");
+            throw new WrongLoginException("Wrong password");
         }
     }
 
