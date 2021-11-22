@@ -2,19 +2,24 @@ package org.example;
 
 import java.util.*;
 
-import static org.example.HashHandler.*;
 
 public class LoginHandler {
 
     Map<String, User> userList = new HashMap<>();
     Map <String, UserPermission> userPermissions = new HashMap<>();
 
+    private final HashHandler hashHandler;
+
+    public LoginHandler() {
+        hashHandler = new HashHandler();
+    }
+
     public String startLogin(String username, String password) throws WrongLoginException {
         User currentUser = userList.get(username);
         if(username == null){
             throw new WrongLoginException("Wrong username");
         }
-        boolean validate = verifyPassword(password,
+        boolean validate = hashHandler.verifyPassword(password,
                 currentUser.getHashPassword(),
                 currentUser.getSalt());
         if(validate){
@@ -25,8 +30,8 @@ public class LoginHandler {
     }
 
     public void addUser(String username, String password) {
-        String tmpSalt = generateSalt(5).get();
-        String tmpHash = hashPassword(password, tmpSalt).get();
+        String tmpSalt = hashHandler.generateSalt(5).get();
+        String tmpHash = hashHandler.hashPassword(password, tmpSalt).get();
         userList.put(username, new User(username,
                 tmpHash,
                 tmpSalt,

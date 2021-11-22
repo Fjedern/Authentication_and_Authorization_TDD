@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public class HashHandler {
 
-    private static final SecureRandom RAND = new SecureRandom();
+    private final SecureRandom RAND = new SecureRandom();
 
-    public static Optional<String> generateSalt (final int length) {
+    public Optional<String> generateSalt (final int length) {
 
         if (length < 1) {
             System.err.println("error in generateSalt: length must be > 0");
@@ -26,11 +26,11 @@ public class HashHandler {
         return Optional.of(Base64.getEncoder().encodeToString(salt));
     }
 
-    private static final int ITERATIONS = 65536;
-    private static final int KEY_LENGTH = 512;
-    private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
+    private final int ITERATIONS = 65536;
+    private final int KEY_LENGTH = 512;
+    private final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
-    public static Optional<String> hashPassword (String password, String salt) {
+    public Optional<String> hashPassword (String password, String salt) {
 
         char[] chars = password.toCharArray();
         byte[] bytes = salt.getBytes();
@@ -53,7 +53,7 @@ public class HashHandler {
         }
     }
 
-    public static boolean verifyPassword (String password, String key, String salt) {
+    public boolean verifyPassword (String password, String key, String salt) {
         Optional<String> optEncrypted = hashPassword(password, salt);
         if (!optEncrypted.isPresent()) return false;
         return optEncrypted.get().equals(key);
