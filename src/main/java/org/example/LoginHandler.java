@@ -33,7 +33,7 @@ public class LoginHandler {
                 generateUniqueToken()));
     }
 
-    private String generateUniqueToken(){
+    /*private String generateUniqueToken(){
         Random rand = new Random();
         int token = rand.nextInt(50 + userList.size());
 
@@ -41,6 +41,10 @@ public class LoginHandler {
             token = rand.nextInt(50 + userList.size());
 
         return Integer.toString(token);
+    }*/
+
+    private String generateUniqueToken(){
+        return UUID.randomUUID().toString();
     }
 
     public boolean validateToken(String token) {
